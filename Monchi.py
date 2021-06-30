@@ -1,3 +1,16 @@
+import requests
+from bs4 import BeautifulSoup
+from IPython.display import clear_output
+
+print("Buneos días Bienvenido a Monchi")
+busca = input("Ingresa los ingredientes para empezar abuscar recetas")
+busca=busca.replace(" ","+")
+url ='https://www.recetasgratis.net/busqueda?q='+busca 
+
+request = requests.get(url)
+print(request)
+soup = BeautifulSoup(request.text,'html.parser')
+
 Recetas = soup.select(".resultado")
 ListRecetas=[]
 for rec in Recetas:
