@@ -19,18 +19,18 @@ def infoCovid(paises_):
             'x-rapidapi-host': "covid-19-data.p.rapidapi.com"
             }
         response = requests.request("GET", url, headers=headers, params=querystring)
-        pais_covid.append(response.json()[0])
-        time.sleep(1)#hay que esperar para hacer mas consultas de varios paises
+        if response.status_code==200:
+            total=response.json()[0]
+            provinces = total['provinces'][0]
+            del(total["provinces"])
+            total.update(provinces)
+            pais_covid.append(total)            
+            time.sleep(1)#hay que esperar para hacer mas consultas de varios paises
+        else:
+            print("Error, no recibimos respuesta")
+            break
+    
     return pais_covid
 
-def tabla(pais_covid):
-    for total in pais_covid:
-        provinces = total['provinces'][0]
-        del(total["provinces"])
-        total.update(provinces)
-    return pais_covid
-
-pais_covid=infoCovid(paises_[0:9])
-pais_covid=tabla(pais_covid)
-
+pais_covid=infoCovid(paises_[0:3])
 pd.DataFrame(pais_covid)
