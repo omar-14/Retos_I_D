@@ -20,8 +20,8 @@ def f(key,ingredientes,numero):
                }
     return jsonify(response)
 
-@app.route('/api/monchi/key=<key>&ingredientes=<ingredientes>', methods = ["GET"])
 
+@app.route('/api/monchi/key=<key>&ingredientes=<ingredientes>', methods = ["GET"])
 def g(key,ingredientes):
     if key not in keys:
         return jsonify({"eror":"errorkey"})
@@ -35,4 +35,10 @@ def g(key,ingredientes):
                }
     return jsonify(response)
 
-app.run(debug = True, host = "192.168.3.5")
+@app.route('/api/id=<id>', methods = ["GET"])
+def h(id):
+    response = {'menssage':'success','id':id}
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(debug = True)
